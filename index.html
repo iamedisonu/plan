@@ -1,74 +1,847 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Isomo Frontend Final Plan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Isomo React Frontend Handoff Plan</title>
   <style>
-    :root{--green:#8CC63D;--blue:#1DAFEC;--orange:#EFB34A;--dark:#303030;--muted:#54595F;--line:#EDEDED;--bg:#FFFFFF;--soft:#F8F8F8;--soft2:#F4F4F4;--ink:#111827;--shadow:0 12px 34px rgba(15,23,42,.06)}
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:linear-gradient(180deg,#fbfdff 0,#fff 260px);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.7}
-    .page{max-width:1220px;margin:0 auto;padding:28px 24px 72px}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 22px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .mark{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--green) 0 48%,var(--blue) 49% 100%);box-shadow:var(--shadow)}
-    .brand strong{display:block;font-size:15px;color:var(--dark)}
-    .brand span{display:block;font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .button{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--dark);padding:9px 12px;font:inherit;font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(15,23,42,.04)}
-    .button.primary{border-color:transparent;background:var(--green);color:#fff;font-weight:800}
-    .hero{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(300px,.68fr);gap:22px;align-items:stretch;padding:30px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(140,198,61,.10),rgba(29,175,236,.08)),#fff;box-shadow:var(--shadow)}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:5px 10px;border-radius:999px;background:#f3fae8;color:#5d8f20;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
-    h1{margin:0;max-width:860px;font-size:clamp(34px,5vw,58px);line-height:.98;color:var(--dark)}
-    .hero-copy{max-width:82ch;margin:16px 0 0;color:var(--muted);font-size:17px}
-    .meta-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
-    .meta-card{min-height:104px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 8px 20px rgba(15,23,42,.04)}
-    .meta-card .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
-    .meta-card .value{margin-top:6px;color:var(--dark);font-size:20px;font-weight:900}
-    .meta-card .note{margin-top:4px;color:var(--muted);font-size:12px}
-    .panel{padding:20px;border:1px solid rgba(29,175,236,.18);border-radius:14px;background:rgba(255,255,255,.8);display:flex;flex-direction:column;justify-content:space-between;gap:16px}
-    .panel h2{margin:0 0 10px;font-size:16px;color:var(--dark)}
-    .signal-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-    .signal-list li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:14px}
-    .dot{width:8px;height:8px;margin-top:7px;border-radius:999px;background:var(--blue);flex:0 0 auto}.dot.green{background:var(--green)}.dot.orange{background:var(--orange)}
-    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-    .tag{display:inline-flex;align-items:center;min-height:28px;padding:5px 9px;border-radius:999px;background:var(--soft);color:var(--muted);font-size:12px;font-weight:800;white-space:nowrap}
-    .tag.green{background:#f3fae8;color:#5d8f20}.tag.blue{background:#eaf8fe;color:#167aa3}.tag.orange{background:#fff8ec;color:#98680d}
-    .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px;margin-top:26px;align-items:start}
-    .nav{position:sticky;top:16px;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.95);box-shadow:0 10px 24px rgba(15,23,42,.04)}
-    .nav h2{margin:0 0 10px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-    .nav a{display:block;padding:8px 10px;border-radius:8px;color:var(--dark);font-size:14px;text-decoration:none}.nav a:hover{background:#eaf8fe;color:#167aa3}
-    section{margin-bottom:28px;padding:24px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(15,23,42,.04)}
-    section>h2{display:flex;align-items:center;gap:10px;margin:0 0 8px;color:var(--dark);font-size:24px;line-height:1.15}
-    .lede{max-width:86ch;margin:0 0 18px;color:var(--muted);font-size:15px}
-    .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#eaf8fe;color:#167aa3;font-size:13px;font-weight:900;flex:0 0 auto}
-    .grid{display:grid;gap:14px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .card{padding:18px;border:1px solid var(--line);border-radius:12px;background:#fff}.card.soft{background:var(--soft)}.card.blue{background:#eaf8fe;border-color:rgba(29,175,236,.2)}.card.green{background:#f3fae8;border-color:rgba(140,198,61,.24)}.card.orange{background:#fff8ec;border-color:rgba(239,179,74,.28)}
-    .card h3{margin:0 0 8px;color:var(--dark);font-size:16px}.card p{margin:0;color:var(--muted);font-size:14px}.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14px}.card li{margin:5px 0}
-    .note{margin-top:12px;padding:12px 14px;border-left:4px solid var(--orange);border-radius:10px;background:#fff8ec;color:#7b5b16}
-    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
-    .flow-step{position:relative;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;min-height:132px}
-    .flow-step:not(:last-child)::after{content:">";position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center}
-    .flow-step .kicker{color:#167aa3;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.flow-step h3{margin:6px 0;font-size:16px}.flow-step p{margin:0;color:var(--muted);font-size:13px}
-    .timeline{display:grid;gap:12px;margin-top:18px}
-    .phase{display:grid;grid-template-columns:120px minmax(0,1fr) 150px;gap:16px;align-items:start;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.phase.current{border-color:rgba(140,198,61,.45);background:linear-gradient(90deg,#f3fae8,#fff 54%)}
-    .phase .phase-id{color:#167aa3;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.06em}.phase h3{margin:0 0 5px;font-size:16px}.phase p{margin:0;color:var(--muted);font-size:14px}.status{justify-self:end;display:inline-flex;justify-content:center;min-width:110px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#5d8f20;background:#f3fae8}.status.later{color:var(--muted);background:var(--soft)}
-    .screen-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-    .screen-card{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;min-height:150px}.screen-icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:#eaf8fe;color:#167aa3;font-weight:900;font-size:15px}.screen-card:nth-child(3n) .screen-icon,.screen-card:nth-child(4n) .screen-icon{background:#f3fae8;color:#5d8f20}.screen-card h3{margin:0 0 4px;font-size:16px}.screen-card p{margin:0 0 10px;color:var(--muted);font-size:13px}.screen-card .mini{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:9px}
-    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;font-size:14px;background:#fff} .table th,.table td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.table th{background:var(--soft);color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}.table tr:last-child td{border-bottom:0}
-    code{padding:2px 6px;border-radius:5px;background:#f4f7fa;color:#1f2937;font-size:.92em;font-family:Consolas,Monaco,monospace}
-    pre{margin:0;padding:16px;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#101827;color:#e5edf7;font-size:13px;line-height:1.55;font-family:Consolas,Monaco,monospace}
-    .code-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-    .swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.swatch{min-height:96px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}.swatch .color{height:48px}.swatch .body{padding:9px}.swatch strong{display:block;color:var(--dark);font-size:13px}.swatch span{color:var(--muted);font-size:12px}
-    .do-dont{display:grid;grid-template-columns:1fr 1fr;gap:14px}.checklist{margin:0;padding:0;list-style:none;display:grid;gap:9px}.checklist li{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:14px}.check,.x{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-top:2px;color:#fff;font-size:12px;font-weight:900;flex:0 0 auto}.check{background:var(--green)}.x{background:#6b7280}
-    .footer-note{margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--muted);font-size:13px}
-    .split{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-    .dense{display:grid;gap:10px}
-    .stepbox{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
-    .stepbox h3{margin:0 0 6px;font-size:15px}.stepbox p{margin:0;color:var(--muted);font-size:14px}
-    @media (max-width: 980px){.hero,.layout,.meta-grid,.grid.two,.grid.three,.flow,.screen-grid,.code-grid,.swatches,.do-dont,.split{grid-template-columns:1fr}.nav{position:static}.phase{grid-template-columns:1fr}.status{justify-self:start}.flow-step:not(:last-child)::after{content:"v";right:16px;top:auto;bottom:-10px;transform:none}}
-    @media print{body{background:#fff}.page{max-width:none;padding:0}.topbar,.nav,.actions{display:none}.hero,section,.card,.screen-card,.phase,.flow-step{box-shadow:none;break-inside:avoid}.layout{display:block}section{margin-bottom:18px}}
+    :root {
+      --green: #8cc63d;
+      --green-dark: #5d8f20;
+      --blue: #1dafec;
+      --blue-dark: #167aa3;
+      --ink: #303030;
+      --text: #111827;
+      --muted: #54595f;
+      --line: #ededed;
+      --surface: #ffffff;
+      --soft: #f8f8f8;
+      --soft-green: #f3fae8;
+      --soft-blue: #eaf8fe;
+      --soft-orange: #fff8ec;
+      --orange: #efb34a;
+      --shadow: 0 18px 48px rgba(17, 24, 39, 0.08);
+      --shadow-soft: 0 10px 28px rgba(17, 24, 39, 0.06);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, #f9fbfd 0, #ffffff 320px),
+        #ffffff;
+      color: var(--text);
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--blue-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 24px 72px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, var(--green) 0 48%, var(--blue) 49% 100%);
+      box-shadow: var(--shadow-soft);
+      flex: 0 0 auto;
+    }
+
+    .brand strong {
+      display: block;
+      color: var(--ink);
+      font-size: 15px;
+      letter-spacing: 0.01em;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(17, 24, 39, 0.04);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: var(--green);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: 24px;
+      align-items: stretch;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(140, 198, 61, 0.1), rgba(29, 175, 236, 0.08)),
+        #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--soft-green);
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 790px;
+      color: var(--ink);
+      font-size: clamp(34px, 4.8vw, 58px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 76ch;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .hero-copy strong {
+      color: var(--ink);
+    }
+
+    .hero-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid rgba(29, 175, 236, 0.18);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .hero-panel h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .signal-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .signal-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 7px;
+      border-radius: 99px;
+      background: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .dot.green {
+      background: var(--green);
+    }
+
+    .dot.orange {
+      background: var(--orange);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0 0;
+    }
+
+    .meta-card {
+      min-height: 104px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.04);
+    }
+
+    .meta-card .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .meta-card .value {
+      margin-top: 6px;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .meta-card .note {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 28px;
+      align-items: start;
+    }
+
+    .nav {
+      position: sticky;
+      top: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav h2 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--ink);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+    }
+
+    section {
+      margin-bottom: 34px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.045);
+    }
+
+    section > h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1.15;
+    }
+
+    section > p.lede {
+      max-width: 84ch;
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .num {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .card.soft {
+      background: var(--soft);
+    }
+
+    .card.blue {
+      border-color: rgba(29, 175, 236, 0.22);
+      background: var(--soft-blue);
+    }
+
+    .card.green {
+      border-color: rgba(140, 198, 61, 0.24);
+      background: var(--soft-green);
+    }
+
+    .card.orange {
+      border-color: rgba(239, 179, 74, 0.28);
+      background: var(--soft-orange);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card li {
+      margin: 5px 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.green {
+      background: var(--soft-green);
+      color: var(--green-dark);
+    }
+
+    .tag.blue {
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+    }
+
+    .tag.orange {
+      background: var(--soft-orange);
+      color: #98680d;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      position: relative;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      min-height: 130px;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .flow-step .kicker {
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .flow-step h3 {
+      margin: 6px 0;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 150px;
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .phase.current {
+      border-color: rgba(140, 198, 61, 0.45);
+      background: linear-gradient(90deg, var(--soft-green), #ffffff 54%);
+    }
+
+    .phase .phase-id {
+      color: var(--blue-dark);
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .phase h3 {
+      margin: 0 0 5px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .phase p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status {
+      justify-self: end;
+      display: inline-flex;
+      justify-content: center;
+      min-width: 110px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--green-dark);
+      background: var(--soft-green);
+    }
+
+    .status.later {
+      color: var(--muted);
+      background: var(--soft);
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .screen-card {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      min-height: 148px;
+    }
+
+    .screen-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .screen-card:nth-child(3n) .screen-icon,
+    .screen-card:nth-child(4n) .screen-icon {
+      background: var(--soft-green);
+      color: var(--green-dark);
+    }
+
+    .screen-card h3 {
+      margin: 0 0 4px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .screen-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .screen-card .mini {
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 9px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #ffffff;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code,
+    pre {
+      font-family: "SF Mono", Consolas, Menlo, monospace;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #f4f7fa;
+      color: #1f2937;
+      font-size: 0.92em;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #101827;
+      color: #e5edf7;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .code-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .swatch {
+      min-height: 96px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .swatch .color {
+      height: 48px;
+    }
+
+    .swatch .body {
+      padding: 9px;
+    }
+
+    .swatch strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .swatch span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .checklist {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin-top: 2px;
+      color: #ffffff;
+      background: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .x {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin-top: 2px;
+      color: #ffffff;
+      background: #6b7280;
+      font-size: 12px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .layout,
+      .meta-grid,
+      .grid.two,
+      .grid.three,
+      .grid.four,
+      .flow,
+      .screen-grid,
+      .code-grid,
+      .swatches,
+      .do-dont {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        position: static;
+      }
+
+      .phase {
+        grid-template-columns: 1fr;
+      }
+
+      .status {
+        justify-self: start;
+      }
+
+      .flow-step:not(:last-child)::after {
+        content: "v";
+        right: 16px;
+        top: auto;
+        bottom: -10px;
+        transform: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .topbar,
+      .nav,
+      .actions {
+        display: none;
+      }
+
+      .hero,
+      section,
+      .card,
+      .screen-card,
+      .phase,
+      .flow-step {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      section {
+        margin-bottom: 18px;
+      }
+
+      .print-only {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
@@ -78,7 +851,7 @@
         <div class="mark" aria-hidden="true"></div>
         <div>
           <strong>Isomo Frontend Plan</strong>
-          <span>Final polished handoff for the frontend engineer</span>
+          <span>React handoff for supervisor review</span>
         </div>
       </div>
       <div class="actions">
@@ -91,24 +864,47 @@
       <div>
         <div class="eyebrow">React Frontend Handoff</div>
         <h1>One Isomo platform, programme workspaces, and a cited leadership assistant.</h1>
-        <p class="hero-copy">This document consolidates the frontend guidance into one polished plan for the engineer who will build the Isomo web app. It is structured to be practical, complete, and easy to use as a development brief.</p>
+        <p class="hero-copy">
+          This plan turns the current frontend screen idea into a buildable React product direction. The first version should be contract-first: React should not depend on how Isomo data is organized behind the scenes. It should build clear programme screens against stable backend responses, then add the assistant and later expand to other programmes.
+        </p>
         <div class="meta-grid">
-          <div class="meta-card"><div class="label">Frontend</div><div class="value">React</div><div class="note">TypeScript, Vite, routing</div></div>
-          <div class="meta-card"><div class="label">First Workspace</div><div class="value">Circles</div><div class="note">Active cohort: cohort_02_circles_2026</div></div>
-          <div class="meta-card"><div class="label">Backend Direction</div><div class="value">FastAPI</div><div class="note">CSV-backed first, Postgres later</div></div>
-          <div class="meta-card"><div class="label">Core Principle</div><div class="value">Trust</div><div class="note">Denominators, freshness, citations</div></div>
+          <div class="meta-card">
+            <div class="label">Frontend</div>
+            <div class="value">React</div>
+            <div class="note">Vite, TypeScript, routed workspaces</div>
+          </div>
+          <div class="meta-card">
+            <div class="label">First Workspace</div>
+            <div class="value">Circles</div>
+            <div class="note">First product workspace, contract-scoped</div>
+          </div>
+          <div class="meta-card">
+            <div class="label">Backend Direction</div>
+            <div class="value">FastAPI</div>
+            <div class="note">API contracts first, storage hidden</div>
+          </div>
+          <div class="meta-card">
+            <div class="label">Core Principle</div>
+            <div class="value">Trust</div>
+            <div class="note">Denominators, freshness, warnings, citations</div>
+          </div>
         </div>
       </div>
-      <aside class="panel">
+
+      <aside class="hero-panel" aria-label="Executive summary">
         <div>
           <h2>Executive Summary</h2>
           <ul class="signal-list">
-            <li><span class="dot green"></span><span>Keep the shell, programme workspaces, identity ledger, uploads, tracker review, indicators, learner journey, and assistant.</span></li>
-            <li><span class="dot"></span><span>Change the sequence: build the trusted Circles data interface first, then put leadership Q&amp;A on top of it.</span></li>
-            <li><span class="dot orange"></span><span>Do not rebuild business rules in React. The backend remains the source of truth for validation, identity, citations, exports, and audit.</span></li>
+            <li><span class="dot green"></span><span>Keep the screen plan: shell, programme workspaces, identity ledger, uploads, tracker review, indicators, learner journey, and assistant.</span></li>
+            <li><span class="dot"></span><span>Change the sequence: build the trusted Circles data interface first, then put leadership Q&A on top of it.</span></li>
+            <li><span class="dot orange"></span><span>Do not make React depend on folders, CSVs, or pipeline layout. The backend owns data organization, validation, identity, citations, exports, and audit.</span></li>
           </ul>
         </div>
-        <div class="tag-row"><span class="tag green">Supervisor-ready</span><span class="tag blue">React delivery</span><span class="tag orange">Evidence first</span></div>
+        <div class="tag-row">
+          <span class="tag green">Supervisor-ready plan</span>
+          <span class="tag blue">React delivery</span>
+          <span class="tag orange">Evidence first</span>
+        </div>
       </aside>
     </main>
 
@@ -131,71 +927,238 @@
       <div>
         <section id="direction">
           <h2><span class="num">1</span> Direction</h2>
-          <p class="lede">The React frontend should present the existing Isomo data system through clear programme workspaces, operational screens, and a cited leadership assistant.</p>
+          <p class="lede">
+            The React frontend should present Isomo through clear programme workspaces, operational screens, and a cited leadership assistant without caring how backend data is stored or organized.
+          </p>
           <div class="grid three">
-            <div class="card green"><h3>Build one platform</h3><p>Use a shared shell, consistent navigation, and a single design system.</p></div>
-            <div class="card blue"><h3>Keep scope clear</h3><p>Users should always know which programme and cohort they are viewing.</p></div>
-            <div class="card orange"><h3>Protect trust</h3><p>Every number needs a denominator, source, freshness, and warning state when relevant.</p></div>
+            <div class="card green">
+              <h3>Build one platform</h3>
+              <p>Use a shared shell, consistent navigation, and a single design system.</p>
+            </div>
+            <div class="card blue">
+              <h3>Keep programme scope clear</h3>
+              <p>Users should always know which programme and cohort they are viewing.</p>
+            </div>
+            <div class="card orange">
+              <h3>Protect trust</h3>
+              <p>Every number needs a denominator, source, freshness, and warning state when relevant.</p>
+            </div>
+          </div>
+          <div class="tag-row">
+            <span class="tag green">One platform</span>
+            <span class="tag blue">Programme workspaces</span>
+            <span class="tag">Evidence layer</span>
+            <span class="tag">Leadership assistant</span>
           </div>
         </section>
 
         <section id="adjustments">
           <h2><span class="num">2</span> Key Adjustments</h2>
-          <p class="lede">The screen plan is strong. These adjustments make it buildable against the real Isomo project and reduce delivery risk.</p>
+          <p class="lede">
+            The screen plan is strong. These adjustments make it buildable without coupling the frontend to the current data layout.
+          </p>
           <div class="grid two">
-            <div class="card"><h3>Start with Circles</h3><p>Circles is the strongest active data lane. Keep Academy, IRIS, and Graduate in the architecture, but do not pretend they are equally ready.</p></div>
-            <div class="card"><h3>Dashboard before AI</h3><p>Build the structured evidence screens first. The assistant becomes more credible when users can open the same metrics, sources, and citations.</p></div>
-            <div class="card"><h3>CSV-backed backend first</h3><p>Use FastAPI over governed CSV exports first. Move to Postgres and pgvector later without changing the React UI contract.</p></div>
-            <div class="card"><h3>Backend validates uploads</h3><p>The browser can upload and show status, but the backend must validate headers, week labels, promotion status, and logs.</p></div>
+            <div class="card">
+              <h3>Start with Circles</h3>
+              <p>Circles should be the first product workspace. Keep Academy, IRIS, and Graduate in the architecture, but gate each workspace behind its own backend contract.</p>
+            </div>
+            <div class="card">
+              <h3>Dashboard before AI</h3>
+              <p>Build the structured evidence screens first. The assistant becomes more credible when users can open the same metrics, sources, and citations.</p>
+            </div>
+            <div class="card">
+              <h3>Contract-first backend</h3>
+              <p>React consumes stable JSON responses only. The backend may use CSV, Postgres, another store, or a temporary mock layer, but the browser should not know.</p>
+            </div>
+            <div class="card">
+              <h3>Backend validates uploads</h3>
+              <p>The browser can upload and show status, but the backend must validate headers, week labels, promotion status, and logs.</p>
+            </div>
           </div>
         </section>
 
         <section id="shape">
           <h2><span class="num">3</span> Product Shape</h2>
-          <p class="lede">The experience should feel like one Isomo product with four workspaces, one leadership assistant, and one shared evidence/audit layer.</p>
+          <p class="lede">
+            The experience should feel like one Isomo product with four workspaces, one leadership assistant, and one shared evidence/audit layer.
+          </p>
           <div class="flow">
-            <div class="flow-step"><div class="kicker">Step 1</div><h3>Choose programme</h3><p>Start with Circles. Other workspaces can exist as planned states until contracts are ready.</p></div>
-            <div class="flow-step"><div class="kicker">Step 2</div><h3>Inspect data</h3><p>Dashboard, schools, indicators, identity, data quality, and evidence.</p></div>
-            <div class="flow-step"><div class="kicker">Step 3</div><h3>Ask questions</h3><p>Leadership Q&amp;A uses trusted metrics and returns citations.</p></div>
-            <div class="flow-step"><div class="kicker">Step 4</div><h3>Act with audit</h3><p>Uploads, review actions, exports, and sensitive operations are logged.</p></div>
+            <div class="flow-step">
+              <div class="kicker">Step 1</div>
+              <h3>Choose programme</h3>
+              <p>Start with Circles. Other workspaces can exist as planned states until contracts are ready.</p>
+            </div>
+            <div class="flow-step">
+              <div class="kicker">Step 2</div>
+              <h3>Inspect data</h3>
+              <p>Dashboard, schools, indicators, identity, data quality, and evidence.</p>
+            </div>
+            <div class="flow-step">
+              <div class="kicker">Step 3</div>
+              <h3>Ask questions</h3>
+              <p>Leadership Q&A uses trusted metrics and returns citations.</p>
+            </div>
+            <div class="flow-step">
+              <div class="kicker">Step 4</div>
+              <h3>Act with audit</h3>
+              <p>Uploads, review actions, exports, and sensitive operations are logged.</p>
+            </div>
           </div>
         </section>
 
         <section id="roadmap">
           <h2><span class="num">4</span> Build Roadmap</h2>
-          <p class="lede">The recommended build order keeps delivery realistic: foundation first, evidence screens second, assistant after the data interface is trustworthy.</p>
+          <p class="lede">
+            The recommended build order keeps delivery realistic: frontend foundation and mock contracts first, evidence screens second, assistant after the backend contract is trustworthy.
+          </p>
           <div class="timeline">
-            <div class="phase current"><div class="phase-id">Phase 1</div><div><h3>React Foundation</h3><p>Vite, TypeScript, routing, shell, programme switcher, theme tokens, cards, tables, drawers, status chips, TanStack Query, API client, and mock fixtures.</p></div><span class="status">Start Here</span></div>
-            <div class="phase"><div class="phase-id">Phase 2</div><div><h3>Circles Dashboard And Evidence</h3><p>Dashboard, indicators, data quality, evidence drawer, source badges, freshness badges, and metric definition drawers.</p></div><span class="status later">Next</span></div>
-            <div class="phase"><div class="phase-id">Phase 3</div><div><h3>Schools And Identity</h3><p>School list, school detail, identity ledger, source ID mapping, review queue shell, and raw ID versus canonical ID display.</p></div><span class="status later">Then</span></div>
-            <div class="phase"><div class="phase-id">Phase 4</div><div><h3>Operations</h3><p>Manual uploads, tracker review, package progress, Canvas operations, grading, and backlog views.</p></div><span class="status later">Later</span></div>
-            <div class="phase"><div class="phase-id">Phase 5</div><div><h3>Leadership Q&amp;A</h3><p>Assistant workspace, answer cards, citation panel, retrieval and generating states, follow-up threads, clarification, retry, and cancel support.</p></div><span class="status later">After Evidence</span></div>
-            <div class="phase"><div class="phase-id">Phase 6</div><div><h3>Other Programmes</h3><p>Academy, IRIS, Graduate, and cross-programme learner journey once backend contracts exist.</p></div><span class="status later">Contract Gated</span></div>
+            <div class="phase current">
+              <div class="phase-id">Phase 1</div>
+              <div>
+                <h3>React Foundation</h3>
+                <p>Vite, TypeScript, routing, shell, programme switcher, theme tokens, cards, tables, drawers, status chips, TanStack Query, typed API client, and mock API fixtures.</p>
+              </div>
+              <span class="status">Start Here</span>
+            </div>
+            <div class="phase">
+              <div class="phase-id">Phase 2</div>
+              <div>
+                <h3>Circles Dashboard And Evidence</h3>
+                <p>Dashboard, indicators, data quality, evidence drawer, source badges, freshness badges, and metric definition drawers driven by API responses.</p>
+              </div>
+              <span class="status later">Next</span>
+            </div>
+            <div class="phase">
+              <div class="phase-id">Phase 3</div>
+              <div>
+                <h3>Schools And Identity</h3>
+                <p>School list, school detail, identity ledger, source ID mapping, review queue shell, and raw ID versus canonical ID display through backend contracts.</p>
+              </div>
+              <span class="status later">Then</span>
+            </div>
+            <div class="phase">
+              <div class="phase-id">Phase 4</div>
+              <div>
+                <h3>Operations</h3>
+                <p>Manual uploads, tracker review, package progress, Canvas operations, grading, and backlog views without exposing backend storage layout.</p>
+              </div>
+              <span class="status later">Later</span>
+            </div>
+            <div class="phase">
+              <div class="phase-id">Phase 5</div>
+              <div>
+                <h3>Leadership Q&A</h3>
+                <p>Assistant workspace, answer cards, citation panel, retrieval and generating states, follow-up threads, clarification, retry, and cancel support.</p>
+              </div>
+              <span class="status later">After Evidence</span>
+            </div>
+            <div class="phase">
+              <div class="phase-id">Phase 6</div>
+              <div>
+                <h3>Other Programmes</h3>
+                <p>Academy, IRIS, Graduate, and cross-programme learner journey once backend contracts exist.</p>
+              </div>
+              <span class="status later">Contract Gated</span>
+            </div>
           </div>
         </section>
 
         <section id="screens">
           <h2><span class="num">5</span> Screen Plan</h2>
-          <p class="lede">These screens should stay in the product plan. The first implementation should prioritize shell, dashboard, schools, indicators, data quality, and evidence.</p>
+          <p class="lede">
+            These screens should stay in the product plan. The first implementation should prioritize shell, dashboard, schools, indicators, data quality, and evidence using mockable API responses.
+          </p>
           <div class="screen-grid">
-            <article class="screen-card"><div class="screen-icon">01</div><div><h3>Global Shell</h3><p>Programme switcher, sidebar navigation, active programme badge, notifications, user menu, assistant entry, and audit/admin links.</p><div class="mini">Must reset filters, search, selected school, and selected learner on programme switch.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">02</div><div><h3>Leadership Q&amp;A</h3><p>Question input, answer card, citation panel, source chips, follow-ups, clarification, retry, regenerate, and cancel.</p><div class="mini">No trusted answer without source evidence unless backend explicitly marks it safe.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">03</div><div><h3>Programme Dashboard</h3><p>Fast snapshot of learners, schools, reporting denominator, coverage, package progress, freshness, and warnings.</p><div class="mini">Every metric card shows denominator and source/freshness.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">04</div><div><h3>Identity Ledger</h3><p>Canonical learners, source IDs, raw IDs, match status, review queue, conflicts, and evidence drawers.</p><div class="mini">React must not invent matches. Matching decisions come from backend.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">05</div><div><h3>Manual Uploads</h3><p>Source selector, week selector, upload, backend validation result, promotion status, and run log.</p><div class="mini">Backend owns folder creation, header validation, week validation, promotion, and logging.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">06</div><div><h3>Tracker Review</h3><p>Raw submission panel, cleaned submission panel, review queue, void recommendations, closure reason, owner, and status.</p><div class="mini">Keep system-generated reasons visible, but require human confirmation for sensitive final actions.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">07</div><div><h3>Indicators Board</h3><p>Metric cards with value, numerator, denominator, owner, caveat, status, source, freshness, and evidence click-through.</p><div class="mini">This is the bridge between data and leadership decisions.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">08</div><div><h3>Learner Journey</h3><p>Circles learner profile first, then future cross-programme timeline once enrollment contracts exist.</p><div class="mini">Learner-level views are sensitive and must be role-gated.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">09</div><div><h3>Data Quality</h3><p>Pipeline status, match coverage, learner coverage, missing exports, stale exports, conflicts, and validation results.</p><div class="mini">This screen should ship early because it protects credibility.</div></div></article>
-            <article class="screen-card"><div class="screen-icon">10</div><div><h3>Evidence</h3><p>Export manifest, metric dictionary, source table list, generated timestamps, row counts, warnings, and citation previews.</p><div class="mini">Evidence should open in drawers so users do not lose context.</div></div></article>
+            <article class="screen-card">
+              <div class="screen-icon">01</div>
+              <div>
+                <h3>Global Shell</h3>
+                <p>Programme switcher, sidebar navigation, active programme badge, notifications, user menu, assistant entry, and audit/admin links.</p>
+                <div class="mini">Must reset filters, search, selected school, and selected learner on programme switch.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">02</div>
+              <div>
+                <h3>Leadership Q&A</h3>
+                <p>Question input, answer card, citation panel, source chips, follow-ups, clarification, retry, regenerate, and cancel.</p>
+                <div class="mini">No trusted answer without source evidence unless backend explicitly marks it safe.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">03</div>
+              <div>
+                <h3>Programme Dashboard</h3>
+                <p>Fast snapshot of learners, schools, reporting denominator, coverage, package progress, freshness, and warnings.</p>
+                <div class="mini">Every metric card shows denominator and source/freshness.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">04</div>
+              <div>
+                <h3>Identity Ledger</h3>
+                <p>Canonical learners, source IDs, raw IDs, match status, review queue, conflicts, and evidence drawers.</p>
+                <div class="mini">React must not invent matches. Matching decisions come from backend.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">05</div>
+              <div>
+                <h3>Manual Uploads</h3>
+                <p>Source selector, week selector, upload, backend validation result, promotion status, and run log.</p>
+                <div class="mini">Backend owns upload handling, validation, promotion, and logging. React only shows the status contract.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">06</div>
+              <div>
+                <h3>Tracker Review</h3>
+                <p>Raw submission panel, cleaned submission panel, review queue, void recommendations, closure reason, owner, and status.</p>
+                <div class="mini">Keep system-generated reasons visible, but require human confirmation for sensitive final actions.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">07</div>
+              <div>
+                <h3>Indicators Board</h3>
+                <p>Metric cards with value, numerator, denominator, owner, caveat, status, source, freshness, and evidence click-through.</p>
+                <div class="mini">This is the bridge between data and leadership decisions.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">08</div>
+              <div>
+                <h3>Learner Journey</h3>
+                <p>Circles learner profile first, then future cross-programme timeline once enrollment contracts exist.</p>
+                <div class="mini">Learner-level views are sensitive and must be role-gated.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">09</div>
+              <div>
+                <h3>Data Quality</h3>
+                <p>Backend health, match coverage, learner coverage, stale data warnings, conflicts, and validation results.</p>
+                <div class="mini">This screen should ship early because it protects credibility.</div>
+              </div>
+            </article>
+            <article class="screen-card">
+              <div class="screen-icon">10</div>
+              <div>
+                <h3>Evidence</h3>
+                <p>Metric dictionary, evidence items, generated timestamps, row counts, warnings, and citation previews.</p>
+                <div class="mini">Evidence should open in drawers so users do not lose context.</div>
+              </div>
+            </article>
           </div>
         </section>
 
         <section id="contracts">
-          <h2><span class="num">6</span> API Contracts</h2>
-          <p class="lede">Keep API routes programme-scoped even if the backend schema is shared. Response contracts should be stable, versioned, and source-aware.</p>
+          <h2><span class="num">6</span> API Contract Direction</h2>
+          <p class="lede">
+            Keep API routes programme-scoped and storage-agnostic. Response contracts should be stable, versioned, and evidence-aware, while backend storage and data organization remain private implementation details.
+          </p>
           <div class="code-grid">
-            <pre>GET /api/me
+            <pre><code>GET /api/me
 GET /api/programmes
 GET /api/programmes/:programmeSlug/dashboard
 GET /api/programmes/:programmeSlug/schools
@@ -207,8 +1170,8 @@ GET /api/programmes/:programmeSlug/data-quality
 GET /api/programmes/:programmeSlug/evidence
 POST /api/programmes/:programmeSlug/uploads
 POST /api/programmes/:programmeSlug/uploads/:uploadId/promote
-POST /api/assistant/messages</pre>
-            <pre>{
+POST /api/assistant/messages</code></pre>
+            <pre><code>{
   "schema_version": "v1",
   "data": {},
   "meta": {
@@ -218,24 +1181,47 @@ POST /api/assistant/messages</pre>
     "sources": []
   },
   "warnings": []
-}</pre>
+}</code></pre>
           </div>
-          <div class="card orange" style="margin-top:14px"><h3>Error payload standard</h3><pre>{
+          <div class="card orange" style="margin-top:14px">
+            <h3>Error payload standard</h3>
+            <pre><code>{
   "error": {
     "code": "DATA_SOURCE_MISSING",
-    "message": "A required source file is missing.",
+    "message": "Required backend data is unavailable.",
     "retryable": false,
     "request_id": "req_..."
   }
-}</pre></div>
+}</code></pre>
+          </div>
+          <div class="card blue" style="margin-top:14px">
+            <h3>Frontend boundary</h3>
+            <p>React should only know endpoint names, request shapes, response fields, statuses, and evidence objects. It should not know whether the backend used CSVs, folders, R scripts, Postgres tables, or another internal structure.</p>
+          </div>
         </section>
 
         <section id="react">
-          <h2><span class="num">7</span> React Guidance</h2>
-          <p class="lede">Use a simple, maintainable React stack. Build reusable primitives before custom screens.</p>
-          <div class="split">
-            <div class="card"><h3>Recommended stack</h3><ul><li>React</li><li>TypeScript</li><li>Vite</li><li>React Router</li><li>TanStack Query</li><li>Zustand only if shared state becomes hard</li><li>Recharts, ECharts, or Visx</li><li>Tailwind or token-driven CSS</li></ul></div>
-            <div class="card"><h3>Folder shape</h3><pre>isomo-web/
+          <h2><span class="num">7</span> React Implementation Guidance</h2>
+          <p class="lede">
+            Use a simple, maintainable React stack. Build reusable primitives before custom screens.
+          </p>
+          <div class="grid two">
+            <div class="card">
+              <h3>Recommended Stack</h3>
+              <ul>
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Vite</li>
+                <li>React Router</li>
+                <li>TanStack Query</li>
+                <li>Zustand only if shared state becomes hard</li>
+                <li>Recharts, ECharts, or Visx</li>
+                <li>Tailwind or token-driven CSS</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Folder Shape</h3>
+              <pre><code>isomo-web/
   src/
     app/
     api/
@@ -255,16 +1241,39 @@ POST /api/assistant/messages</pre>
     routes/
     styles/
     types/
-    utils/</pre></div>
+    utils/</code></pre>
+            </div>
           </div>
-          <div class="card blue" style="margin-top:14px"><h3>Core components to build first</h3><div class="tag-row"><span class="tag">AppShell</span><span class="tag">ProgrammeSwitcher</span><span class="tag">MetricCard</span><span class="tag">CoverageCard</span><span class="tag">StatusChip</span><span class="tag">FreshnessBadge</span><span class="tag">SourceBadge</span><span class="tag">EvidenceDrawer</span><span class="tag">DataTable</span><span class="tag">FilterBar</span><span class="tag">SearchInput</span><span class="tag">SkeletonCard</span><span class="tag">SkeletonTable</span><span class="tag">AssistantAnswerCard</span><span class="tag">CitationPanel</span><span class="tag">ConfirmActionDialog</span></div></div>
+          <div class="card blue" style="margin-top:14px">
+            <h3>Core components to build first</h3>
+            <div class="tag-row">
+              <span class="tag">AppShell</span>
+              <span class="tag">ProgrammeSwitcher</span>
+              <span class="tag">MetricCard</span>
+              <span class="tag">CoverageCard</span>
+              <span class="tag">StatusChip</span>
+              <span class="tag">FreshnessBadge</span>
+              <span class="tag">SourceBadge</span>
+              <span class="tag">EvidenceDrawer</span>
+              <span class="tag">DataTable</span>
+              <span class="tag">FilterBar</span>
+              <span class="tag">SearchInput</span>
+              <span class="tag">SkeletonCard</span>
+              <span class="tag">SkeletonTable</span>
+              <span class="tag">AssistantAnswerCard</span>
+              <span class="tag">CitationPanel</span>
+              <span class="tag">ConfirmActionDialog</span>
+            </div>
+          </div>
         </section>
 
         <section id="assistant">
           <h2><span class="num">8</span> Assistant Contract</h2>
-          <p class="lede">The assistant is not just chat. It is a cited answer surface. It should explain what it knows, where it came from, and what warnings apply.</p>
+          <p class="lede">
+            The assistant is not just chat. It is a cited answer surface. It should explain what it knows, where it came from, and what warnings apply.
+          </p>
           <div class="code-grid">
-            <pre>{
+            <pre><code>{
   "answer_id": "ans_123",
   "thread_id": "thread_123",
   "status": "complete",
@@ -275,93 +1284,163 @@ POST /api/assistant/messages</pre>
   "citations": [],
   "warnings": [],
   "suggested_followups": []
-}</pre>
-            <pre>{
+}</code></pre>
+            <pre><code>{
   "citation_id": "cite_123",
-  "source_type": "csv_export",
+  "source_type": "metric_contract",
   "title": "Learner coverage",
-  "path_or_uri": "viz/reports/exports/v2/docs/learner_coverage.csv",
+  "source_ref": "evidence:learner_coverage:latest",
   "record_locator": {
-    "rows": [],
-    "columns": []
+    "page": null,
+    "section": "coverage_summary",
+    "rows": []
   },
-  "summary": "Coverage counts from the latest export.",
+  "summary": "Coverage counts from the latest approved backend evidence.",
   "generated_at": "2026-04-15T21:15:38Z"
-}</pre>
+}</code></pre>
           </div>
           <div class="grid three" style="margin-top:14px">
-            <div class="card"><h3>Loading states</h3><p>Thinking, retrieving sources, checking metrics, generating answer, attaching citations, complete.</p></div>
-            <div class="card"><h3>Answer modes</h3><p>Structured metric, SQL answer, document answer, hybrid answer, cannot answer, needs clarification.</p></div>
-            <div class="card"><h3>No source case</h3><p>Show: "No trusted source found." Do not present an uncited answer as reliable.</p></div>
+            <div class="card">
+              <h3>Loading states</h3>
+              <p>thinking, retrieving sources, checking metrics, generating answer, attaching citations, complete.</p>
+            </div>
+            <div class="card">
+              <h3>Answer modes</h3>
+              <p>structured metric, SQL answer, document answer, hybrid answer, cannot answer, needs clarification.</p>
+            </div>
+            <div class="card">
+              <h3>No source case</h3>
+              <p>Show: "No trusted source found." Do not present an uncited answer as reliable.</p>
+            </div>
           </div>
         </section>
 
         <section id="design">
           <h2><span class="num">9</span> Visual Direction</h2>
-          <p class="lede">The UI should feel calm, operational, and trustworthy. Most of the structure should be neutral, with green and blue used intentionally.</p>
-          <div class="grid" style="grid-template-columns:repeat(5,minmax(0,1fr));gap:10px">
-            <div class="card"><div style="height:48px;background:#8CC63D;border-radius:8px"></div><h3 style="margin-top:10px">Green</h3><p>#8CC63D — primary actions, success, confirmed records.</p></div>
-            <div class="card"><div style="height:48px;background:#1DAFEC;border-radius:8px"></div><h3 style="margin-top:10px">Blue</h3><p>#1DAFEC — links, selected nav, citations, info.</p></div>
-            <div class="card"><div style="height:48px;background:#303030;border-radius:8px"></div><h3 style="margin-top:10px">Dark</h3><p>#303030 — headings and high contrast text.</p></div>
-            <div class="card"><div style="height:48px;background:#54595F;border-radius:8px"></div><h3 style="margin-top:10px">Muted</h3><p>#54595F — secondary text and notes.</p></div>
-            <div class="card"><div style="height:48px;background:#EDEDED;border-radius:8px"></div><h3 style="margin-top:10px">Border</h3><p>#EDEDED — lines, separators, quiet structure.</p></div>
+          <p class="lede">
+            The UI should feel calm, operational, and trustworthy. Most of the structure should be neutral, with green and blue used intentionally.
+          </p>
+          <div class="swatches">
+            <div class="swatch">
+              <div class="color" style="background:#8cc63d"></div>
+              <div class="body"><strong>Green</strong><span>#8CC63D<br>Primary actions, success, confirmed records.</span></div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#1dafec"></div>
+              <div class="body"><strong>Blue</strong><span>#1DAFEC<br>Links, selected nav, citations, info.</span></div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#303030"></div>
+              <div class="body"><strong>Dark</strong><span>#303030<br>Headings and high contrast text.</span></div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#54595f"></div>
+              <div class="body"><strong>Muted</strong><span>#54595F<br>Secondary text and notes.</span></div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#ededed"></div>
+              <div class="body"><strong>Border</strong><span>#EDEDED<br>Lines, separators, quiet structure.</span></div>
+            </div>
           </div>
           <div class="grid three" style="margin-top:14px">
-            <div class="card green"><h3>Use skeletons</h3><p>Dashboard cards, tables, assistant answers, evidence drawers, learner panels, and school details need layout-matching skeletons.</p></div>
-            <div class="card blue"><h3>Cache by programme</h3><p>TanStack Query keys must include programme scope so one workspace never leaks data into another.</p></div>
-            <div class="card orange"><h3>Invalidate after actions</h3><p>Uploads, promotions, review actions, exports, tracker changes, and pipeline reruns must refresh affected screens.</p></div>
+            <div class="card green">
+              <h3>Use skeletons</h3>
+              <p>Dashboard cards, tables, assistant answers, evidence drawers, learner panels, and school details need layout-matching skeletons.</p>
+            </div>
+            <div class="card blue">
+              <h3>Cache by programme</h3>
+              <p>TanStack Query keys must include programme scope so one workspace never leaks data into another.</p>
+            </div>
+            <div class="card orange">
+              <h3>Invalidate after actions</h3>
+              <p>Uploads, promotions, review actions, assistant messages, tracker changes, and backend refresh events must refresh affected screens.</p>
+            </div>
           </div>
         </section>
 
         <section id="rules">
-          <h2><span class="num">10</span> Rules and Guardrails</h2>
-          <p class="lede">These are the rules that keep the frontend aligned with the Isomo data system.</p>
+          <h2><span class="num">10</span> Rules And Guardrails</h2>
+          <p class="lede">
+            These are the rules that keep the frontend aligned with backend contracts instead of backend internals.
+          </p>
           <div class="do-dont">
             <div class="card green">
               <h3>Do</h3>
-              <ul class="checklist"><li><span class="check">+</span><span>Call backend endpoints for trusted results.</span></li><li><span class="check">+</span><span>Show denominators, freshness, warnings, and evidence.</span></li><li><span class="check">+</span><span>Keep cache scoped by programme.</span></li><li><span class="check">+</span><span>Use drawers for sources, metric definitions, and citations.</span></li><li><span class="check">+</span><span>Gate sensitive learner and identity views by role.</span></li></ul>
+              <ul class="checklist">
+                <li><span class="check">+</span><span>Call backend endpoints or mock contract fixtures for trusted results.</span></li>
+                <li><span class="check">+</span><span>Show denominators, freshness, warnings, and evidence.</span></li>
+                <li><span class="check">+</span><span>Keep cache scoped by programme.</span></li>
+                <li><span class="check">+</span><span>Use drawers for evidence, metric definitions, and citations.</span></li>
+                <li><span class="check">+</span><span>Gate sensitive learner and identity views by role.</span></li>
+              </ul>
             </div>
-            <div class="card orange">
+            <div class="card">
               <h3>Do Not</h3>
-              <ul class="checklist"><li><span class="x">×</span><span>Parse raw source files in the browser.</span></li><li><span class="x">×</span><span>Hardcode current CSV counts.</span></li><li><span class="x">×</span><span>Mix data between programmes.</span></li><li><span class="x">×</span><span>Show uncited answers as trustworthy.</span></li><li><span class="x">×</span><span>Build broad AI chat before structured metrics exist.</span></li></ul>
+              <ul class="checklist">
+                <li><span class="x">-</span><span>Rebuild backend business logic in React.</span></li>
+                <li><span class="x">-</span><span>Parse files, folders, or pipeline outputs in the browser.</span></li>
+                <li><span class="x">-</span><span>Hardcode counts from current backend files.</span></li>
+                <li><span class="x">-</span><span>Show percentages without denominators.</span></li>
+                <li><span class="x">-</span><span>Show uncited AI answers as trustworthy.</span></li>
+              </ul>
             </div>
           </div>
         </section>
 
         <section id="done">
-          <h2><span class="num">11</span> First Version Scope</h2>
-          <p class="lede">The first usable React version should have the minimum set needed to feel real, trustworthy, and ready for leadership use.</p>
-          <div class="grid two">
-            <div class="card"><h3>Must ship first</h3><ul><li>Shared shell</li><li>Programme switcher</li><li>Circles dashboard</li><li>School list</li><li>School detail</li><li>Indicators board</li><li>Data quality page</li><li>Evidence drawer</li></ul></div>
-            <div class="card"><h3>Must also include</h3><ul><li>Stable loading skeletons</li><li>Error and empty states</li><li>Programme-scoped caching</li><li>Backend API client</li><li>Role-aware navigation shell</li><li>Search and filter basics</li></ul></div>
+          <h2><span class="num">11</span> First Usable Version</h2>
+          <p class="lede">
+            This is the recommended definition of done for the first useful React version.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Must Include</th>
+                  <th>Why It Matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Shell</td>
+                  <td>Shared shell, programme switcher, role-aware navigation.</td>
+                  <td>Keeps one platform feeling while preventing programme confusion.</td>
+                </tr>
+                <tr>
+                  <td>Circles Workspace</td>
+                  <td>Dashboard, school list, school detail, indicators board.</td>
+                  <td>Delivers immediate value while the backend can wire real data behind the same contract.</td>
+                </tr>
+                <tr>
+                  <td>Trust Layer</td>
+                  <td>Data-quality page, evidence drawer, freshness badges, evidence badges.</td>
+                  <td>Prevents users from trusting numbers blindly.</td>
+                </tr>
+                <tr>
+                  <td>UX States</td>
+                  <td>Skeletons, errors, empty states, retry actions, stable layouts.</td>
+                  <td>Makes the product feel reliable under real network conditions.</td>
+                </tr>
+                <tr>
+                  <td>Frontend Architecture</td>
+                  <td>Backend API client, programme-scoped caching, typed response models.</td>
+                  <td>Allows backend storage and data organization to change without redesigning screens.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="note">Leadership Q&amp;A should only be introduced after the evidence and metric surfaces are stable.</div>
+          <div class="card blue" style="margin-top:14px">
+            <h3>Final sequencing guidance</h3>
+            <p>Build the contract-first interface with mock responses first. Then connect backend data behind the same contracts, add the assistant, and expand to uploads, review workflows, and other programmes.</p>
+          </div>
         </section>
 
-        <section>
-          <h2><span class="num">12</span> Line-by-Line Guidance for the Engineer</h2>
-          <p class="lede">This section removes ambiguity. The frontend engineer should read and implement in this order.</p>
-          <div class="dense">
-            <div class="stepbox"><h3>1. Build the app shell first.</h3><p>Create a shared shell with logo, programme switcher, active programme label, notifications, user menu, assistant entry, and evidence/audit links.</p></div>
-            <div class="stepbox"><h3>2. Make programme state explicit everywhere.</h3><p>Every screen must know programmeSlug, cohortSlug, userRole, permissions, and dataFreshness. Never allow one programme’s data to appear inside another.</p></div>
-            <div class="stepbox"><h3>3. Create the Circles dashboard next.</h3><p>Show canonical learners, canonical schools, denominator, coverage, package progress, freshness, warnings, and source notes.</p></div>
-            <div class="stepbox"><h3>4. Add school explorer and school detail.</h3><p>Let users compare schools and inspect one school in detail, including coverage, Canvas activity, grading, and freshness.</p></div>
-            <div class="stepbox"><h3>5. Add indicators and data quality.</h3><p>Every indicator card must show a numerator, denominator, source, freshness, owner, caveat, and click-through evidence. Data quality must show missing files, stale exports, and unresolved issues.</p></div>
-            <div class="stepbox"><h3>6. Add identity and learner views.</h3><p>Use canonical learner IDs, source-system mappings, and review queues. Never let the browser invent matches.</p></div>
-            <div class="stepbox"><h3>7. Add operational workflows.</h3><p>Manual uploads, tracker review, package progress, and Canvas operations must be backend-validated and audit-friendly.</p></div>
-            <div class="stepbox"><h3>8. Add evidence and citations drawers.</h3><p>Any number should be openable as evidence. Users should be able to see source files, row counts, metric definitions, warnings, and generated times.</p></div>
-            <div class="stepbox"><h3>9. Add the assistant last.</h3><p>The assistant must answer only from trusted sources and display citations. If no source exists, show that clearly instead of guessing.</p></div>
-          </div>
-        </section>
-
-        <section>
-          <h2><span class="num">13</span> Final Summary</h2>
-          <p class="lede">This frontend should make Isomo usable for leadership and operations. It should protect trust by showing where each number came from, how fresh it is, and whether the denominator is complete. It should also create a stable base for assistant features, upload workflows, identity review, and cross-programme reporting later.</p>
-        </section>
+        <div class="footer-note">
+          Prepared from <code>ISOMO_REACT_FRONTEND_HANDOFF.md</code>. Supervisor-facing HTML version generated for a clear implementation discussion. Source project root: <code>/Users/mine/Desktop/Isomo</code>.
+        </div>
       </div>
     </div>
-
-    <div class="footer-note">Prepared as a polished HTML handoff document for your frontend engineer. The plan keeps Circles first, dashboard-first before AI, backend validation authoritative, and evidence visible everywhere.</div>
   </div>
 </body>
 </html>
