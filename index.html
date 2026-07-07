@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Isomo React Frontend Handoff Plan</title>
+  <title>Isomo Vue.js Frontend Handoff Plan</title>
   <style>
     :root {
       --green: #8cc63d;
@@ -608,6 +608,112 @@
       padding-top: 9px;
     }
 
+    .wireframe-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      margin: 16px 0 18px;
+    }
+
+    .wireframe-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .wireframe-card h3 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .wireframe-shell {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      min-height: 286px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fafafa;
+    }
+
+    .wireframe-sidebar {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      padding: 12px;
+      border-right: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .wireframe-main {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .wireframe-top,
+    .wireframe-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 110px;
+      gap: 10px;
+    }
+
+    .wireframe-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .wireframe-kpi,
+    .wireframe-panel,
+    .wireframe-list {
+      border: 1px dashed #d8dde5;
+      border-radius: var(--radius);
+      background: #ffffff;
+      padding: 10px;
+    }
+
+    .wireframe-kpi {
+      min-height: 72px;
+    }
+
+    .wireframe-panel {
+      min-height: 120px;
+    }
+
+    .wireframe-list {
+      min-height: 254px;
+      display: grid;
+      align-content: start;
+      gap: 9px;
+    }
+
+    .wire {
+      display: block;
+      height: 11px;
+      border-radius: 999px;
+      background: #d8dde5;
+    }
+
+    .wire.short {
+      width: 44%;
+    }
+
+    .wire.medium {
+      width: 68%;
+    }
+
+    .wire.long {
+      width: 88%;
+    }
+
+    .wire.tall {
+      height: 44px;
+      border-radius: 8px;
+    }
+
     .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--line);
@@ -777,6 +883,7 @@
       .grid.four,
       .flow,
       .screen-grid,
+      .wireframe-grid,
       .code-grid,
       .swatches,
       .do-dont {
@@ -793,6 +900,13 @@
 
       .status {
         justify-self: start;
+      }
+
+      .wireframe-shell,
+      .wireframe-top,
+      .wireframe-row,
+      .wireframe-kpis {
+        grid-template-columns: 1fr;
       }
 
       .flow-step:not(:last-child)::after {
@@ -851,26 +965,26 @@
         <div class="mark" aria-hidden="true"></div>
         <div>
           <strong>Isomo Frontend Plan</strong>
-          <span>React handoff for supervisor review</span>
+          <span>Vue.js handoff for supervisor review</span>
         </div>
       </div>
       <div class="actions">
         <button class="button" onclick="window.print()">Print or Save PDF</button>
-        <a class="button primary" href="#done">First Version Scope</a>
+        <a class="button primary" href="#done">Phase 1 Scope</a>
       </div>
     </header>
 
     <main class="hero">
       <div>
-        <div class="eyebrow">React Frontend Handoff</div>
-        <h1>One Isomo platform, programme workspaces, and a cited leadership assistant.</h1>
+        <div class="eyebrow">Vue.js Frontend Handoff</div>
+        <h1>One Isomo platform, programme workspaces, and Isomo Brain.</h1>
         <p class="hero-copy">
-          This plan turns the current frontend screen idea into a buildable React product direction. The first version should be contract-first: React should not depend on how Isomo data is organized behind the scenes. It should build clear programme screens against stable backend responses, then add the assistant and later expand to other programmes.
+          This plan turns the current frontend screen idea into a buildable Vue.js product direction. Phase 1 should be visual only: routes, screens, layout, skeleton loading states, drawers, and empty states with no real data and no fake data. After the supervisor approves the skeleton, the team can connect backend contracts and continue with the later phases.
         </p>
         <div class="meta-grid">
           <div class="meta-card">
             <div class="label">Frontend</div>
-            <div class="value">React</div>
+            <div class="value">Vue.js</div>
             <div class="note">Vite, TypeScript, routed workspaces</div>
           </div>
           <div class="meta-card">
@@ -895,15 +1009,15 @@
         <div>
           <h2>Executive Summary</h2>
           <ul class="signal-list">
-            <li><span class="dot green"></span><span>Keep the screen plan: shell, programme workspaces, identity ledger, uploads, tracker review, indicators, learner journey, and assistant.</span></li>
-            <li><span class="dot"></span><span>Change the sequence: build the trusted Circles data interface first, then put leadership Q&A on top of it.</span></li>
-            <li><span class="dot orange"></span><span>Do not make React depend on folders, CSVs, or pipeline layout. The backend owns data organization, validation, identity, citations, exports, and audit.</span></li>
+            <li><span class="dot green"></span><span>Keep the screen plan compact: workspace switcher, overview, scholar profiles, schools, data health, and Isomo Brain, with profile/settings/logout handled globally.</span></li>
+            <li><span class="dot"></span><span>Phase 1 must show the app skeleton first: pages, navigation, responsive layout, drawers, tables, cards, forms, and loading placeholders without data.</span></li>
+            <li><span class="dot orange"></span><span>Do not make Vue.js depend on folders, CSVs, or pipeline layout. The backend owns data organization, validation, identity, citations, exports, and audit.</span></li>
           </ul>
         </div>
         <div class="tag-row">
           <span class="tag green">Supervisor-ready plan</span>
-          <span class="tag blue">React delivery</span>
-          <span class="tag orange">Evidence first</span>
+          <span class="tag blue">Vue.js delivery</span>
+          <span class="tag orange">Sources first</span>
         </div>
       </aside>
     </main>
@@ -917,18 +1031,18 @@
         <a href="#roadmap">4. Roadmap</a>
         <a href="#screens">5. Screen Plan</a>
         <a href="#contracts">6. API Contracts</a>
-        <a href="#react">7. React Guidance</a>
-        <a href="#assistant">8. Assistant</a>
+        <a href="#vue">7. Vue.js Guidance</a>
+        <a href="#brain">8. Isomo Brain</a>
         <a href="#design">9. Visual Direction</a>
         <a href="#rules">10. Rules</a>
-        <a href="#done">11. First Version Scope</a>
+        <a href="#done">11. Phase 1 Scope</a>
       </nav>
 
       <div>
         <section id="direction">
           <h2><span class="num">1</span> Direction</h2>
           <p class="lede">
-            The React frontend should present Isomo through clear programme workspaces, operational screens, and a cited leadership assistant without caring how backend data is stored or organized.
+            The Vue.js frontend should present Isomo through clear programme workspaces, operational screens, and a standalone cited Isomo Brain workspace without caring how backend data is stored or organized.
           </p>
           <div class="grid three">
             <div class="card green">
@@ -947,8 +1061,8 @@
           <div class="tag-row">
             <span class="tag green">One platform</span>
             <span class="tag blue">Programme workspaces</span>
-            <span class="tag">Evidence layer</span>
-            <span class="tag">Leadership assistant</span>
+            <span class="tag">Data health</span>
+            <span class="tag">Isomo Brain</span>
           </div>
         </section>
 
@@ -963,12 +1077,12 @@
               <p>Circles should be the first product workspace. Keep Academy, IRIS, and Graduate in the architecture, but gate each workspace behind its own backend contract.</p>
             </div>
             <div class="card">
-              <h3>Dashboard before AI</h3>
-              <p>Build the structured evidence screens first. The assistant becomes more credible when users can open the same metrics, sources, and citations.</p>
+              <h3>Overview before AI</h3>
+              <p>Build the overview, scholar profiles, schools, and data health surfaces first. Isomo Brain becomes more credible when users can open the same programme context, warnings, and citations.</p>
             </div>
             <div class="card">
               <h3>Contract-first backend</h3>
-              <p>React consumes stable JSON responses only. The backend may use CSV, Postgres, another store, or a temporary mock layer, but the browser should not know.</p>
+              <p>Vue.js consumes stable JSON responses only. The backend may use CSV, Postgres, another store, or a temporary mock layer, but the browser should not know.</p>
             </div>
             <div class="card">
               <h3>Backend validates uploads</h3>
@@ -980,7 +1094,7 @@
         <section id="shape">
           <h2><span class="num">3</span> Product Shape</h2>
           <p class="lede">
-            The experience should feel like one Isomo product with four workspaces, one leadership assistant, and one shared evidence/audit layer.
+            The experience should feel like one Isomo product with four workspaces, one standalone Isomo Brain workspace, one global account/settings layer, and one data-health surface per programme.
           </p>
           <div class="flow">
             <div class="flow-step">
@@ -990,13 +1104,13 @@
             </div>
             <div class="flow-step">
               <div class="kicker">Step 2</div>
-              <h3>Inspect data</h3>
-              <p>Dashboard, schools, indicators, identity, data quality, and evidence.</p>
+              <h3>Inspect programme information</h3>
+              <p>Overview, scholar profiles, schools, and data health for the active workspace.</p>
             </div>
             <div class="flow-step">
               <div class="kicker">Step 3</div>
               <h3>Ask questions</h3>
-              <p>Leadership Q&A uses trusted metrics and returns citations.</p>
+              <p>Isomo Brain uses the active workspace context and returns cited answers.</p>
             </div>
             <div class="flow-step">
               <div class="kicker">Step 4</div>
@@ -1009,54 +1123,54 @@
         <section id="roadmap">
           <h2><span class="num">4</span> Build Roadmap</h2>
           <p class="lede">
-            The recommended build order keeps delivery realistic: frontend foundation and mock contracts first, evidence screens second, assistant after the backend contract is trustworthy.
+            The recommended build order keeps delivery realistic: Phase 1 is a no-data visual skeleton for review, Phase 2 connects contracts and data, and later phases add workflow depth, Isomo Brain behavior, and more programmes.
           </p>
           <div class="timeline">
             <div class="phase current">
               <div class="phase-id">Phase 1</div>
               <div>
-                <h3>React Foundation</h3>
-                <p>Vite, TypeScript, routing, shell, programme switcher, theme tokens, cards, tables, drawers, status chips, TanStack Query, typed API client, and mock API fixtures.</p>
+                <h3>Vue.js Visual Skeleton And Project Schema</h3>
+                <p>Create the Vite + TypeScript app, Vue Router, AppShell, workspace switcher, programme-aware navigation, login route, settings route, theme mode controls, shared components, design tokens, skeleton cards, skeleton tables, drawers, forms, empty states, responsive layouts, and folder schema. Do not connect APIs, do not use real data, and do not show fake numbers, schools, scholars, answers, or statuses.</p>
               </div>
-              <span class="status">Start Here</span>
+              <span class="status">Design Skeleton</span>
             </div>
             <div class="phase">
               <div class="phase-id">Phase 2</div>
               <div>
-                <h3>Circles Dashboard And Evidence</h3>
-                <p>Dashboard, indicators, data quality, evidence drawer, source badges, freshness badges, and metric definition drawers driven by API responses.</p>
+                <h3>Circles Contracts And Real Data Wiring</h3>
+                <p>After the visual skeleton is approved, connect overview, scholar profiles, schools, data health, source badges, freshness badges, uploads, and warnings to stable API responses.</p>
               </div>
               <span class="status later">Next</span>
             </div>
             <div class="phase">
               <div class="phase-id">Phase 3</div>
               <div>
-                <h3>Schools And Identity</h3>
-                <p>School list, school detail, identity ledger, source ID mapping, review queue shell, and raw ID versus canonical ID display through backend contracts.</p>
+                <h3>Schools And Scholar Profiles</h3>
+              <p>School list, school detail, scholar profiles, source ID mapping, submissions, and raw ID versus canonical ID display through backend contracts.</p>
               </div>
               <span class="status later">Then</span>
             </div>
             <div class="phase">
               <div class="phase-id">Phase 4</div>
               <div>
-                <h3>Operations</h3>
-                <p>Manual uploads, tracker review, package progress, Canvas operations, grading, and backlog views without exposing backend storage layout.</p>
+                <h3>Data Health Operations</h3>
+              <p>Uploads, sync status, mismatch review, package progress, Canvas operations, grading, and backlog views without exposing backend storage layout.</p>
               </div>
               <span class="status later">Later</span>
             </div>
             <div class="phase">
               <div class="phase-id">Phase 5</div>
               <div>
-                <h3>Leadership Q&A</h3>
-                <p>Assistant workspace, answer cards, citation panel, retrieval and generating states, follow-up threads, clarification, retry, and cancel support.</p>
+                <h3>Isomo Brain Behavior</h3>
+                <p>Standalone Isomo Brain workspace behavior, cited answer cards, citation panel, SQL/RAG/hybrid routing states, saved chat history, follow-up threads, clarification, retry, and cancel support.</p>
               </div>
-              <span class="status later">After Evidence</span>
+              <span class="status later">After Core Pages</span>
             </div>
             <div class="phase">
               <div class="phase-id">Phase 6</div>
               <div>
                 <h3>Other Programmes</h3>
-                <p>Academy, IRIS, Graduate, and cross-programme learner journey once backend contracts exist.</p>
+                <p>Academy, IRIS, Graduate, and their own workspace-specific overview, scholar profiles, schools, and data health screens once backend contracts exist.</p>
               </div>
               <span class="status later">Contract Gated</span>
             </div>
@@ -1066,87 +1180,183 @@
         <section id="screens">
           <h2><span class="num">5</span> Screen Plan</h2>
           <p class="lede">
-            These screens should stay in the product plan. The first implementation should prioritize shell, dashboard, schools, indicators, data quality, and evidence using mockable API responses.
+            These are the pages and app modules the Vue.js product needs. In Phase 1, every item should exist as a navigable visual skeleton only: layout, labels, placeholder blocks, drawers, forms, and empty states, but no real data and no fake data.
           </p>
+          <div class="card orange" style="margin-bottom:14px">
+            <h3>Phase 1 rule: show design, not data</h3>
+            <p>Use neutral skeleton blocks for overview metrics, scholar profiles, school lists, submissions, warnings, upload status, and data health. The supervisor should be able to judge the shape, spacing, navigation, and workflow without seeing any programme values yet.</p>
+          </div>
+          <div class="table-wrap" style="margin-bottom:14px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Page / App Module</th>
+                  <th>Suggested Route</th>
+                  <th>Phase 1 Skeleton Must Show</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Workspace</td>
+                  <td>/</td>
+                  <td>Programme switcher, programme-aware navigation, notifications area, user profile menu, settings entry, logout action, and page content slot.</td>
+                </tr>
+                <tr>
+                  <td>Login</td>
+                  <td>/login</td>
+                  <td>Google SSO button shell, loading state, role-loading placeholder, access policy note, error state shell.</td>
+                </tr>
+                <tr>
+                  <td>Overview</td>
+                  <td>/programmes/circles/overview</td>
+                  <td>Quick programme summary, updates, warnings, key metrics, and citation drawer trigger.</td>
+                </tr>
+                <tr>
+                  <td>Scholar Profiles</td>
+                  <td>/programmes/circles/scholars</td>
+                  <td>Scholar search box, filter bar, scholar list/table, submission history shell, and detail view with progress timeline.</td>
+                </tr>
+                <tr>
+                  <td>Schools</td>
+                  <td>/programmes/circles/schools</td>
+                  <td>Search and filter bar, school list, school detail drawer, school performance summary, and school-level scholar context.</td>
+                </tr>
+                <tr>
+                  <td>Data Health</td>
+                  <td>/programmes/circles/data-health</td>
+                  <td>Sync status, last updated time, mismatches, upload area, validation cards, stale-data warnings, database health, and source/citation context. Internal sections: Sync, Uploads, Mismatches, Validation, Freshness.</td>
+                </tr>
+                <tr>
+                  <td>Isomo Brain</td>
+                  <td>/isomo-brain</td>
+                  <td>Full-page Brain layout, message thread skeleton, saved thread history, question composer, workspace-aware routing-state chips, answer card skeleton, citation side panel skeleton, and follow-up area shell.</td>
+                </tr>
+                <tr>
+                  <td>Settings</td>
+                  <td>/settings</td>
+                  <td>Theme mode control with Light, Dark, and System options, account preferences, and profile/settings shell.</td>
+                </tr>
+                <tr>
+                  <td>Profile Menu</td>
+                  <td>global menu</td>
+                  <td>Logged-in user profile, logout action, settings entry, and role indicator.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="wireframe-grid" aria-label="Phase 1 no-data wireframe examples">
+            <div class="wireframe-card">
+              <h3>Phase 1 App Shell Skeleton</h3>
+              <div class="wireframe-shell">
+                <div class="wireframe-sidebar">
+                  <span class="wire long"></span>
+                  <span class="wire medium"></span>
+                  <span class="wire medium"></span>
+                  <span class="wire short"></span>
+                  <span class="wire medium"></span>
+                  <span class="wire short"></span>
+                </div>
+                <div class="wireframe-main">
+                  <div class="wireframe-top">
+                    <span class="wire long"></span>
+                    <span class="wire"></span>
+                  </div>
+                  <div class="wireframe-kpis">
+                    <div class="wireframe-kpi"><span class="wire short"></span><span class="wire medium"></span></div>
+                    <div class="wireframe-kpi"><span class="wire short"></span><span class="wire medium"></span></div>
+                    <div class="wireframe-kpi"><span class="wire short"></span><span class="wire medium"></span></div>
+                    <div class="wireframe-kpi"><span class="wire short"></span><span class="wire medium"></span></div>
+                  </div>
+                  <div class="wireframe-row">
+                    <div class="wireframe-panel"><span class="wire medium"></span><span class="wire tall" style="margin-top:12px"></span></div>
+                    <div class="wireframe-panel"><span class="wire medium"></span><span class="wire tall" style="margin-top:12px"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wireframe-card">
+              <h3>Phase 1 Page Skeleton Pattern</h3>
+              <div class="wireframe-list">
+                <span class="wire long"></span>
+                <span class="wire medium"></span>
+                <span class="wire tall"></span>
+                <span class="wire tall"></span>
+                <span class="wire tall"></span>
+                <span class="wire medium"></span>
+              </div>
+            </div>
+          </div>
           <div class="screen-grid">
             <article class="screen-card">
               <div class="screen-icon">01</div>
               <div>
-                <h3>Global Shell</h3>
-                <p>Programme switcher, sidebar navigation, active programme badge, notifications, user menu, assistant entry, and audit/admin links.</p>
-                <div class="mini">Must reset filters, search, selected school, and selected learner on programme switch.</div>
+                <h3>Workspace</h3>
+                <p>Programme switcher, programme-aware navigation, active workspace badge, notifications, user profile menu, settings entry, and logout access.</p>
+                <div class="mini">Switching workspace must update navigation, page context, and Isomo Brain context automatically.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">02</div>
               <div>
-                <h3>Leadership Q&A</h3>
-                <p>Question input, answer card, citation panel, source chips, follow-ups, clarification, retry, regenerate, and cancel.</p>
-                <div class="mini">No trusted answer without source evidence unless backend explicitly marks it safe.</div>
+                <h3>Isomo Brain</h3>
+                <p>Standalone Brain page with message thread, saved chat history, question composer, routing-state chips, answer cards, citation panel, source chips, follow-ups, clarification, retry, regenerate, and cancel.</p>
+                <div class="mini">Do not make this a persistent sidebar on other pages. It can have a navigation link, but the experience opens as its own Isomo Brain workspace with restorable conversations.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">03</div>
               <div>
-                <h3>Programme Dashboard</h3>
-                <p>Fast snapshot of learners, schools, reporting denominator, coverage, package progress, freshness, and warnings.</p>
-                <div class="mini">Every metric card shows denominator and source/freshness.</div>
+                <h3>Overview</h3>
+                <p>Fast snapshot of the current programme with updates, warnings, key metrics, freshness, and the most important information for users in a hurry.</p>
+                <div class="mini">This is the default landing page for each workspace and should include the main metrics directly.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">04</div>
               <div>
-                <h3>Identity Ledger</h3>
-                <p>Canonical learners, source IDs, raw IDs, match status, review queue, conflicts, and evidence drawers.</p>
-                <div class="mini">React must not invent matches. Matching decisions come from backend.</div>
+                <h3>Scholar Profiles</h3>
+                <p>Scholar search, filters, scholar records, submissions, progress tracking, and detailed scholar views.</p>
+                <div class="mini">This is where users track an individual scholar over time.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">05</div>
               <div>
-                <h3>Manual Uploads</h3>
-                <p>Source selector, week selector, upload, backend validation result, promotion status, and run log.</p>
-                <div class="mini">Backend owns upload handling, validation, promotion, and logging. React only shows the status contract.</div>
+                <h3>Schools</h3>
+                <p>School list, school summaries, school performance, and drill-down into the school and its scholars.</p>
+                <div class="mini">This page should show how each school is doing and connect that view to scholar context.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">06</div>
               <div>
-                <h3>Tracker Review</h3>
-                <p>Raw submission panel, cleaned submission panel, review queue, void recommendations, closure reason, owner, and status.</p>
-                <div class="mini">Keep system-generated reasons visible, but require human confirmation for sensitive final actions.</div>
+                <h3>Data Health</h3>
+                <p>Sync status, last updated time, mismatches, upload area, validation states, stale-data warnings, and what exists in the database.</p>
+                <div class="mini">Structure this page into clear sections: Sync, Uploads, Mismatches, Validation, and Freshness, so it stays compact but readable.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">07</div>
               <div>
-                <h3>Indicators Board</h3>
-                <p>Metric cards with value, numerator, denominator, owner, caveat, status, source, freshness, and evidence click-through.</p>
-                <div class="mini">This is the bridge between data and leadership decisions.</div>
+                <h3>Settings</h3>
+                <p>Theme mode selection, account preferences, and application settings.</p>
+                <div class="mini">Default theme should follow system unless the user explicitly changes it.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">08</div>
               <div>
-                <h3>Learner Journey</h3>
-                <p>Circles learner profile first, then future cross-programme timeline once enrollment contracts exist.</p>
-                <div class="mini">Learner-level views are sensitive and must be role-gated.</div>
+                <h3>Profile Menu</h3>
+                <p>Logged-in user identity, role, logout, and path to settings.</p>
+                <div class="mini">This should be accessible globally from the top bar or account menu.</div>
               </div>
             </article>
             <article class="screen-card">
               <div class="screen-icon">09</div>
               <div>
-                <h3>Data Quality</h3>
-                <p>Backend health, match coverage, learner coverage, stale data warnings, conflicts, and validation results.</p>
-                <div class="mini">This screen should ship early because it protects credibility.</div>
-              </div>
-            </article>
-            <article class="screen-card">
-              <div class="screen-icon">10</div>
-              <div>
-                <h3>Evidence</h3>
-                <p>Metric dictionary, evidence items, generated timestamps, row counts, warnings, and citation previews.</p>
-                <div class="mini">Evidence should open in drawers so users do not lose context.</div>
+                <h3>Login</h3>
+                <p>Google SSO sign-in shell, role-loading state, access denied state, and first-load route handoff.</p>
+                <div class="mini">Backend plan expects Supabase Auth and role-based access, so the visual skeleton should include the auth entry path.</div>
               </div>
             </article>
           </div>
@@ -1157,12 +1367,69 @@
           <p class="lede">
             Keep API routes programme-scoped and storage-agnostic. Response contracts should be stable, versioned, and evidence-aware, while backend storage and data organization remain private implementation details.
           </p>
+          <div class="card orange" style="margin-bottom:14px">
+            <h3>Phase 1 note</h3>
+            <p>Document these contract targets, but do not connect them in Phase 1. The first deliverable is only the visible Vue.js app skeleton, so endpoints, mock responses, real records, and generated answers should wait until Phase 2.</p>
+          </div>
+          <div class="grid two" style="margin-bottom:14px">
+            <div class="card blue">
+              <h3>Backend architecture the Vue app must reflect</h3>
+              <ul>
+                <li>Sources: Canvas API, Google Drive/Sheets, manual CSV/XLSX, EF SET/DET, Northstar, Typing, and Quill.</li>
+                <li>Foundation: Postgres + pgvector, with Supabase recommended for Auth, RLS, and managed vector support.</li>
+                <li>Brain layer: FastAPI router chooses SQL, RAG, or hybrid paths per question.</li>
+                <li>Model layer: self-hosted model through an <code>llm_client</code> abstraction, with swappable dev/fallback providers.</li>
+              </ul>
+            </div>
+            <div class="card green">
+              <h3>Frontend space to reserve in Phase 1</h3>
+              <ul>
+                <li>Workspace-aware data-source badges and data health sections with upload states.</li>
+                <li>Role badge and access-state shells for field staff, leadership, and admin.</li>
+                <li>Isomo Brain routing-state chips: SQL, RAG, hybrid, validating, citing, and saved thread history by workspace.</li>
+                <li>Citation surfaces for SQL run metadata, result rows, document chunks, and generated timestamps.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="table-wrap" style="margin-bottom:14px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Backend Spine</th>
+                  <th>Frontend Skeleton Implication</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>person</code>, <code>enrollment</code>, <code>system_identity</code></td>
+                  <td>Scholar Profiles page with search/filter, scholar detail view, source-ID mapping drawer, and human review queue shell.</td>
+                </tr>
+                <tr>
+                  <td><code>programme</code>, <code>cohort</code>, <code>school</code></td>
+                  <td>Programme switcher, cohort filter placeholder, school list/table shell, school detail drawer shell.</td>
+                </tr>
+                <tr>
+                  <td><code>assessment_result</code>, <code>platform_activity</code></td>
+                  <td>Overview metrics, programme summary cards, assessment panels, and denominator/source placeholders.</td>
+                </tr>
+                <tr>
+                  <td><code>document</code>, <code>document_chunk</code>, pgvector</td>
+                  <td>Data Health page with sync status, upload state, document/RAG citation placeholders, source previews, and health warnings.</td>
+                </tr>
+                <tr>
+                  <td><code>audit_log</code> + RLS roles</td>
+                  <td>Profile menu role states, admin-only placeholders where needed, and locked sensitive-content states.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="code-grid">
             <pre><code>GET /api/me
 GET /api/programmes
 GET /api/programmes/:programmeSlug/dashboard
 GET /api/programmes/:programmeSlug/schools
 GET /api/programmes/:programmeSlug/schools/:schoolId
+GET /api/programmes/:programmeSlug/source-systems
 GET /api/programmes/:programmeSlug/identity/learners
 GET /api/programmes/:programmeSlug/identity/review-queue
 GET /api/programmes/:programmeSlug/indicators
@@ -1170,7 +1437,8 @@ GET /api/programmes/:programmeSlug/data-quality
 GET /api/programmes/:programmeSlug/evidence
 POST /api/programmes/:programmeSlug/uploads
 POST /api/programmes/:programmeSlug/uploads/:uploadId/promote
-POST /api/assistant/messages</code></pre>
+POST /api/brain/messages
+GET /api/brain/threads/:threadId</code></pre>
             <pre><code>{
   "schema_version": "v1",
   "data": {},
@@ -1196,26 +1464,26 @@ POST /api/assistant/messages</code></pre>
           </div>
           <div class="card blue" style="margin-top:14px">
             <h3>Frontend boundary</h3>
-            <p>React should only know endpoint names, request shapes, response fields, statuses, and evidence objects. It should not know whether the backend used CSVs, folders, R scripts, Postgres tables, or another internal structure.</p>
+            <p>Vue.js should only know endpoint names, request shapes, response fields, statuses, and evidence objects. It should not know whether the backend used CSVs, folders, R scripts, Postgres tables, or another internal structure.</p>
           </div>
         </section>
 
-        <section id="react">
-          <h2><span class="num">7</span> React Implementation Guidance</h2>
+        <section id="vue">
+          <h2><span class="num">7</span> Vue.js Implementation Guidance</h2>
           <p class="lede">
-            Use a simple, maintainable React stack. Build reusable primitives before custom screens.
+            Use a simple, maintainable Vue.js stack. Build reusable primitives before custom screens.
           </p>
           <div class="grid two">
             <div class="card">
               <h3>Recommended Stack</h3>
               <ul>
-                <li>React</li>
+                <li>Vue.js 3</li>
                 <li>TypeScript</li>
                 <li>Vite</li>
-                <li>React Router</li>
-                <li>TanStack Query</li>
-                <li>Zustand only if shared state becomes hard</li>
-                <li>Recharts, ECharts, or Visx</li>
+                <li>Vue Router</li>
+                <li>TanStack Query for Vue</li>
+                <li>Pinia only if shared state becomes hard</li>
+                <li>Vue ECharts, Apache ECharts, Chart.js, or ApexCharts</li>
                 <li>Tailwind or token-driven CSS</li>
               </ul>
             </div>
@@ -1224,21 +1492,32 @@ POST /api/assistant/messages</code></pre>
               <pre><code>isomo-web/
   src/
     app/
-    api/
-    components/
-    features/
-      assistant/
-      dashboard/
-      data-quality/
-      evidence/
-      identity/
-      indicators/
-      journeys/
-      schools/
-      uploads/
-      tracker-review/
+    router/
     layouts/
-    routes/
+    pages/
+      IsomoBrainPage.vue
+      LoginPage.vue
+      OverviewPage.vue
+      DataHealthPage.vue
+      ScholarProfilesPage.vue
+      SettingsPage.vue
+      SchoolsPage.vue
+    components/
+      skeleton/
+      shell/
+      tables/
+      drawers/
+      forms/
+    features/
+      auth/
+      isomo-brain/
+      overview/
+      data-health/
+      scholar-profiles/
+      settings/
+      schools/
+      workspace/
+    api/
     styles/
     types/
     utils/</code></pre>
@@ -1253,25 +1532,45 @@ POST /api/assistant/messages</code></pre>
               <span class="tag">CoverageCard</span>
               <span class="tag">StatusChip</span>
               <span class="tag">FreshnessBadge</span>
-              <span class="tag">SourceBadge</span>
-              <span class="tag">EvidenceDrawer</span>
+              <span class="tag">DataSourceBadge</span>
+              <span class="tag">CitationDrawer</span>
               <span class="tag">DataTable</span>
               <span class="tag">FilterBar</span>
               <span class="tag">SearchInput</span>
               <span class="tag">SkeletonCard</span>
               <span class="tag">SkeletonTable</span>
-              <span class="tag">AssistantAnswerCard</span>
+              <span class="tag">RoleBadge</span>
+              <span class="tag">RoutingStateChip</span>
+              <span class="tag">ChatMessageList</span>
+              <span class="tag">ChatComposer</span>
+              <span class="tag">BrainAnswerCard</span>
               <span class="tag">CitationPanel</span>
+              <span class="tag">CitationSourceTabs</span>
+              <span class="tag">ThemeModeControl</span>
               <span class="tag">ConfirmActionDialog</span>
             </div>
           </div>
         </section>
 
-        <section id="assistant">
-          <h2><span class="num">8</span> Assistant Contract</h2>
+        <section id="brain">
+          <h2><span class="num">8</span> Isomo Brain Workspace</h2>
           <p class="lede">
-            The assistant is not just chat. It is a cited answer surface. It should explain what it knows, where it came from, and what warnings apply.
+            Isomo Brain should be a standalone workspace at <code>/isomo-brain</code>, not a persistent sidebar inside the other product pages. It should feel like a focused question-and-answer workspace with a message thread, saved chat history, composer, answer cards, SQL/RAG/hybrid routing states, citations, and warning states.
           </p>
+          <div class="grid two" style="margin-bottom:14px">
+            <div class="card blue">
+              <h3>Phase 1 Isomo Brain skeleton</h3>
+              <p>Show a full-page Brain layout with a thread history rail or history list shell, an empty message thread, disabled or neutral question composer, routing-state chips, answer card skeleton, citation panel skeleton, and follow-up area shell. Do not show fake answers or fake citations.</p>
+            </div>
+            <div class="card orange">
+              <h3>Navigation rule</h3>
+              <p>The app may link to Isomo Brain from the main navigation or user menu, but other pages should not reserve a permanent Brain sidebar. Keep page width for the operational screens, and keep chat history scoped to the active workspace.</p>
+            </div>
+          </div>
+          <div class="card blue" style="margin-bottom:14px">
+            <h3>Later Brain contract</h3>
+            <p>The response shape below is for later phases after the Isomo Brain skeleton is approved. It should not be rendered as sample chat content during Phase 1.</p>
+          </div>
           <div class="code-grid">
             <pre><code>{
   "answer_id": "ans_123",
@@ -1345,7 +1644,7 @@ POST /api/assistant/messages</code></pre>
           <div class="grid three" style="margin-top:14px">
             <div class="card green">
               <h3>Use skeletons</h3>
-              <p>Dashboard cards, tables, assistant answers, evidence drawers, learner panels, and school details need layout-matching skeletons.</p>
+              <p>Overview cards, scholar lists, school details, data health panels, and Isomo Brain answers need layout-matching skeletons.</p>
             </div>
             <div class="card blue">
               <h3>Cache by programme</h3>
@@ -1353,8 +1652,12 @@ POST /api/assistant/messages</code></pre>
             </div>
             <div class="card orange">
               <h3>Invalidate after actions</h3>
-              <p>Uploads, promotions, review actions, assistant messages, tracker changes, and backend refresh events must refresh affected screens.</p>
+              <p>Uploads, sync refreshes, profile updates, Isomo Brain messages, and backend refresh events must refresh affected screens.</p>
             </div>
+          </div>
+          <div class="card blue" style="margin-top:14px">
+            <h3>Settings and theme modes</h3>
+            <p>Include a Settings page in Phase 1 with an appearance section for Light, Dark, and System theme modes. The skeleton should prove that the shell, cards, tables, drawers, Isomo Brain page, and forms remain readable in each mode.</p>
           </div>
         </section>
 
@@ -1367,17 +1670,18 @@ POST /api/assistant/messages</code></pre>
             <div class="card green">
               <h3>Do</h3>
               <ul class="checklist">
-                <li><span class="check">+</span><span>Call backend endpoints or mock contract fixtures for trusted results.</span></li>
-                <li><span class="check">+</span><span>Show denominators, freshness, warnings, and evidence.</span></li>
+                <li><span class="check">+</span><span>In Phase 1, render neutral skeleton screens only; in later phases, call backend endpoints for trusted results.</span></li>
+                <li><span class="check">+</span><span>Show denominators, freshness, warnings, sources, and citations.</span></li>
                 <li><span class="check">+</span><span>Keep cache scoped by programme.</span></li>
-                <li><span class="check">+</span><span>Use drawers for evidence, metric definitions, and citations.</span></li>
-                <li><span class="check">+</span><span>Gate sensitive learner and identity views by role.</span></li>
+                <li><span class="check">+</span><span>Use drawers for sources, metric definitions, and citations.</span></li>
+                <li><span class="check">+</span><span>Gate sensitive scholar records and profile views by role.</span></li>
               </ul>
             </div>
             <div class="card">
               <h3>Do Not</h3>
               <ul class="checklist">
-                <li><span class="x">-</span><span>Rebuild backend business logic in React.</span></li>
+                <li><span class="x">-</span><span>Rebuild backend business logic in Vue.js.</span></li>
+                <li><span class="x">-</span><span>Use fake Phase 1 values, names, school records, scholar records, AI answers, or successful upload statuses.</span></li>
                 <li><span class="x">-</span><span>Parse files, folders, or pipeline outputs in the browser.</span></li>
                 <li><span class="x">-</span><span>Hardcode counts from current backend files.</span></li>
                 <li><span class="x">-</span><span>Show percentages without denominators.</span></li>
@@ -1388,9 +1692,9 @@ POST /api/assistant/messages</code></pre>
         </section>
 
         <section id="done">
-          <h2><span class="num">11</span> First Usable Version</h2>
+          <h2><span class="num">11</span> Phase 1 Visual Skeleton Scope</h2>
           <p class="lede">
-            This is the recommended definition of done for the first useful React version.
+            This is the recommended definition of done for Phase 1. The supervisor should be able to open the Vue.js app, move through the pages, and understand how the product will look and behave before any data is connected.
           </p>
           <div class="table-wrap">
             <table>
@@ -1404,40 +1708,45 @@ POST /api/assistant/messages</code></pre>
               <tbody>
                 <tr>
                   <td>Shell</td>
-                  <td>Shared shell, programme switcher, role-aware navigation.</td>
-                  <td>Keeps one platform feeling while preventing programme confusion.</td>
+                  <td>Shared shell, sidebar, top bar, programme switcher, role badge placeholder, user menu, notification area, responsive page frame.</td>
+                  <td>Shows the main structure of the app before content is added.</td>
                 </tr>
                 <tr>
-                  <td>Circles Workspace</td>
-                  <td>Dashboard, school list, school detail, indicators board.</td>
-                  <td>Delivers immediate value while the backend can wire real data behind the same contract.</td>
+                  <td>Page Skeletons</td>
+                  <td>Workspace, overview, scholar profiles, schools, data health, Isomo Brain, settings, login, and profile-menu states.</td>
+                  <td>Makes every expected page visible and clickable for design review.</td>
                 </tr>
                 <tr>
-                  <td>Trust Layer</td>
-                  <td>Data-quality page, evidence drawer, freshness badges, evidence badges.</td>
-                  <td>Prevents users from trusting numbers blindly.</td>
+                  <td>Skeleton UI States</td>
+                  <td>Overview metrics, scholar search and filters, school tables, data health panels, upload area, Isomo Brain answer cards, drawers, empty states, loading states, and disabled action states.</td>
+                  <td>Lets the team judge spacing, hierarchy, flow, and responsive behavior without data.</td>
                 </tr>
                 <tr>
-                  <td>UX States</td>
-                  <td>Skeletons, errors, empty states, retry actions, stable layouts.</td>
-                  <td>Makes the product feel reliable under real network conditions.</td>
+                  <td>Project Schema</td>
+                  <td>Vue Router route map, page files, feature folders, workspace switcher, profile menu, shared skeleton components, settings page, theme mode control, theme tokens, and CSS structure.</td>
+                  <td>Gives developers a clean foundation for later data wiring.</td>
                 </tr>
                 <tr>
-                  <td>Frontend Architecture</td>
-                  <td>Backend API client, programme-scoped caching, typed response models.</td>
-                  <td>Allows backend storage and data organization to change without redesigning screens.</td>
+                  <td>Access And Roles</td>
+                  <td>Login page shell, Google SSO button shell, role badge placeholders, access denied shell, and locked sensitive-content placeholders for field staff, leadership, and admin roles.</td>
+                  <td>Matches the backend plan for Supabase Auth and row-level security without implementing access logic in Phase 1.</td>
+                </tr>
+                <tr>
+                  <td>No Data Rule</td>
+                  <td>No backend calls, no mock response values, no fake scholar names, no fake school names, no fake Isomo Brain answers, and no fake upload statuses.</td>
+                  <td>Keeps Phase 1 focused on visual approval only.</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="card blue" style="margin-top:14px">
             <h3>Final sequencing guidance</h3>
-            <p>Build the contract-first interface with mock responses first. Then connect backend data behind the same contracts, add the assistant, and expand to uploads, review workflows, and other programmes.</p>
+            <p>Build and approve the no-data visual skeleton first. Then connect backend contracts, add real programme data, add Isomo Brain behavior, and expand the same structure to other programmes in later phases.</p>
           </div>
         </section>
 
         <div class="footer-note">
-          Prepared from <code>ISOMO_REACT_FRONTEND_HANDOFF.md</code>. Supervisor-facing HTML version generated for a clear implementation discussion. Source project root: <code>/Users/mine/Desktop/Isomo</code>.
+          Prepared as a Vue.js supervisor-facing HTML handoff for a clear implementation discussion. Source project root: <code>/Users/mine/Desktop/Isomo</code>.
         </div>
       </div>
     </div>
